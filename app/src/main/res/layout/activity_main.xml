@@ -6,30 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/Kvitter for alarm"
+    <EditText
+        android:id="@+id/editTextTextPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kvitter for alarm"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="380dp" />
+        android:ems="10"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="154dp"
+        tools:layout_editor_absoluteY="211dp" />
+
+    <EditText
+        android:id="@+id/editTextTextPassword2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="157dp"
+        tools:layout_editor_absoluteY="283dp" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="330dp"
-        android:layout_height="65dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="296dp" />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="409dp"
+        android:id="@+id/BrugernavnLabel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTabBarStyle"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="20dp" />
+        android:text="Brugernavn"
+        tools:layout_editor_absoluteX="50dp"
+        tools:layout_editor_absoluteY="224dp" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        tools:layout_editor_absoluteX="50dp"
+        tools:layout_editor_absoluteY="299dp" />
+
+    <EditText
+        android:id="@+id/VelkommenLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="DETO system"
+        tools:layout_editor_absoluteX="78dp"
+        tools:layout_editor_absoluteY="83dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
