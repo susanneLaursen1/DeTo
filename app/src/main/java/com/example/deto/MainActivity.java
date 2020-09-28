@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         Name = (EditText) findViewById(R.id.editTextTextPassword);
         Password = (EditText) findViewById(R.id.editTextTextPassword2);
         Login = (Button)findViewById(R.id.loginBT);
+
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -30,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void validate(String UserName, String UserPassword){
-        if((UserName == "az44521" )&& (UserPassword == "Efterår2020")){
-            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+        if((UserName == "Deto" )&& (UserPassword == "2020")){
+            Intent intent = new Intent(MainActivity.this,SecondActivity.class);
             startActivity(intent);
         } else{
             counter--;
