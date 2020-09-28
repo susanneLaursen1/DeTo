@@ -31,12 +31,15 @@ public class SecondActivity extends AppCompatActivity {
             case R.id.item2:
                 Intent i = new Intent(SecondActivity.this, Alarm.class);
             startActivity(i);
+            return true;
             case R.id.item3:
                 Intent ii = new Intent(SecondActivity.this, GrafiskOversigt.class);
                 startActivity(ii);
+                return true;
             case R.id.item4:
                 Intent iii = new Intent(SecondActivity.this, KalibreringOgVedligehold.class);
                 startActivity(iii);
+                return true;
             default:return super.onOptionsItemSelected(item);
         }
 
