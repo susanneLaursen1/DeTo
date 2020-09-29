@@ -61,10 +61,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
     public List<Data> getAllData(){
-        String selectQuery = "SELECT *FROM" + DATABASE_NAME;
+        String selectQuery = "SELECT *FROM " + DATABASE_NAME;
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery((selectQuery,null);
+        Cursor cursor = db.rawQuery(selectQuery,null);
 
         if(cursor.moveToFirst()){
             do {

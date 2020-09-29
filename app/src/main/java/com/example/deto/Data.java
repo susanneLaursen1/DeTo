@@ -6,7 +6,7 @@ public class Data {
     String date;
     double nitrite;
 
-    public Data() {
+    public Data(int i, String string, String cursorString) {
 
     }
 
