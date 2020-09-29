@@ -7,10 +7,28 @@
     tools:context=".Alarm">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/AlarmLabel"
+        android:layout_width="89dp"
+        android:layout_height="46dp"
+        android:text="Alarm"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="39dp"
+        tools:layout_editor_absoluteY="13dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        app:srcCompat="@android:drawable/ic_lock_idle_alarm"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/TekstTilAlarmeringTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alarm"
-        tools:layout_editor_absoluteX="160dp"
-        tools:layout_editor_absoluteY="186dp" />
+        android:text="TextView"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="39dp"
+        tools:layout_editor_absoluteY="145dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
