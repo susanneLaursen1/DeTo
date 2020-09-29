@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Alarm">
 
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -15,9 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="160dp"
-        tools:layout_editor_absoluteY="186dp" />
-
+        app:layout_constraintVertical_bias="0.181" />
 
     <TextView
         android:id="@+id/textView5"

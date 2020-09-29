@@ -60,19 +60,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Data data = new Data(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2));
         return data;
     }
-    public List<Data> getAllData(){
+    public List<Data> getAllData() {
         String selectQuery = "SELECT *FROM " + DATABASE_NAME;
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery,null);
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
-        if(cursor.moveToFirst()){
-            do {
-                Data data = new Data();
-                data.setName(Integer.parseInt(cursor.getString(0);
-            }
-        }
 
+    }
     }
 }
 
