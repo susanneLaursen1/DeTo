@@ -10,7 +10,7 @@ public class Data {
 
     }
 
-    public Data(String name, String surname, String date, double nitrite) {
+    public Data(String name1, String s) {
         this.name = name;
         this.surname = surname;
         this.date = date;
@@ -48,6 +48,7 @@ public class Data {
     public void setNitrite(double nitrite) {
         this.nitrite = nitrite;
     }
+
 }
 
 

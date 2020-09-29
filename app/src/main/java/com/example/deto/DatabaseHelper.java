@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -54,25 +55,62 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(DATABASE_NAME, new String[]{COL_1, COL_2, COL_3, COL_4}, COL_1 + "=?", new String[]{String.valueOf(name)},
                 null, null, null, null);
-        if(cursor != null){
+        if (cursor != null) {
             cursor.moveToFirst();
         }
         Data data = new Data(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2));
         return data;
     }
-    public List<Data> getAllData(){
-        String selectQuery = "SELECT *FROM " + DATABASE_NAME;
+
+    public List<Data> getAllData() {
+        List<Data> dataList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + DATABASE_NAME;
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery,null);
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             do {
-                Data data = new Data();
-                data.setName(Integer.parseInt(cursor.getString(0);
-            }
+                Data data = new Data("name1", "1111");
+                data.setName(cursor.getString(0));
+                data.setSurname(cursor.getString(1));
+                data.setDate(cursor.getString(2));
+                data.setNitrite(Double.parseDouble(cursor.getString(3)));
+
+                dataList.add(data);
+
+            } while (cursor.moveToNext());
+
         }
+        return dataList;
+    }
+
+        public int updateData(Data data){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+         ContentValues values = new ContentValues();
+         values.put(COL_1, data.getName());
+         values.put(COL_2, data.getSurname());
+         values.put(COL_3, data.getDate());
+        values.put(COL_4, data.getNitrite());
+
+        return db.update(DATABASE_NAME, values, COL_1 + "=?", new String[]{String.valueOf(data.getName())});
+}
+    public void deleteData(Data data){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(DATABASE_NAME,COL_1 + "?=", new String[]{String.valueOf(data.getName())});
+        db.close();
 
     }
+        public int getDataCount(){
+            String selectQuery = "SELECT * FROM " + DATABASE_NAME;
+
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            cursor.close();
+
+            return cursor.getCount();
+    }
 }
+
 
