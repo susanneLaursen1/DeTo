@@ -1,13 +1,32 @@
 package com.example.deto;
 
+import android.widget.TextView;
+
+import java.util.List;
+
 public class Data {
     String name;
     String surname;
     String date;
     double nitrite;
+    TextView textView;
+    String text = "";
 
     public Data(int i, String string, String cursorString) {
+        textView = (TextView) findViewById(R.id.textView);
+        DatabaseHelper db = new DatabaseHelper(this);
+        db.addData(new Data("name1", "1111"));
+        db.addData(new Data("name2", "2222"));
+        db.addData(new Data("name3", "3333"));
+        db.addData(new Data("name4", "4444"));
 
+        List<Data> data = db.getAllData();
+
+        for(Data d : data){
+            String log = " NAME: " + d.getName() + ", SURNAME:"+ d.getSurname() + "DATE:" + d.getDate() + "NITRITVALUE:" + d.getNitrite() + "\n";
+            text = text +log;
+        }
+        textView.setText(text);
     }
 
     public Data(String name1, String s) {
