@@ -14,12 +14,12 @@ public class MainActivity extends AppCompatActivity {
     private EditText Password;
     private Button Login;
     private int counter = 5;
-
+    DatabaseHelper  myDb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        myDb = new DatabaseHelper(this);
         Name = (EditText)findViewById(R.id.editTextTextPassword);
         Password = (EditText)findViewById(R.id.editTextTextPassword2);
         Login = (Button)findViewById(R.id.loginBT);
