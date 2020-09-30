@@ -23,7 +23,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, 1);
         SQLiteDatabase db = this.getWritableDatabase();
 
-
     }
 
     @Override
@@ -112,5 +111,3 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return cursor.getCount();
     }
 }
-
-

@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText Name;
     private EditText Password;
     private Button Login;
+    private TextView Info;
+    private TextView Warning;
     private int counter = 5;
     TextView textView;
     String text = "";
@@ -41,11 +43,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
         Name = (EditText)findViewById(R.id.editTextTextPassword);
         Password = (EditText)findViewById(R.id.editTextTextPassword2);
         Login = (Button)findViewById(R.id.loginBT);
+        Info = (TextView)findViewById(R.id.textViewInfo);
+        Warning = (TextView)findViewById(R.id.textWarning);
+
+        Info.setText("Number of attemts remaning: 5");
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,8 +64,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         } else{
            counter--;
+            Info.setText("Number of attemts remaning:" + String.valueOf(counter));
+
             if(counter == 0){
                 Login.setEnabled(false);
+                Warning.setText("You have no more attempts left. \n Please try to log in from a computer");
             }
 
         }
