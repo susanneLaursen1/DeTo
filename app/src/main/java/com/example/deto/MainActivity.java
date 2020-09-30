@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
         Name = (EditText)findViewById(R.id.editTextTextPassword);
         Password = (EditText)findViewById(R.id.editTextTextPassword2);
         Login = (Button)findViewById(R.id.loginBT);
