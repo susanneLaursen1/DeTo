@@ -34,8 +34,6 @@ public class Alarm extends AppCompatActivity {
             channel.setDescription(Channel_Desc);
             NotificationManager manger = getSystemService(NotificationManager.class);
             manger.createNotificationChannel(channel);
-
-
         }
 
         if(number >= 5){
