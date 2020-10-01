@@ -41,10 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_3, date);
         contentValues.put(COL_4, nitritvalue);
         long result = db.insert(TABLE_NAME, null, contentValues);
-        if (result == -1)
-             return false;
-        else
-            return true;
+        return result != -1;
     }
     public Cursor getAllData(){
         SQLiteDatabase db = this.getWritableDatabase();

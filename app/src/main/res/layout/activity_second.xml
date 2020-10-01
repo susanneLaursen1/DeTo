@@ -14,32 +14,78 @@
         android:id="@+id/tablayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-       >
+        >
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/Tab1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Historik/oversigt" />
+
         <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/Tab2"
-            android:text="Kalibering"
-            />
-        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Kalibering" />
+
+        <com.google.android.material.tabs.TabItem
             android:id="@+id/Tab3"
-            android:text="Feedback"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Feedback" />
 
     </com.google.android.material.tabs.TabLayout>
-    <androidx.viewpager.widget.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/Viewpager">
 
-    </androidx.viewpager.widget.ViewPager>
+    <EditText
+        android:id="@+id/text"
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/text2"
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/text3"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/text4"
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
 
 </LinearLayout>

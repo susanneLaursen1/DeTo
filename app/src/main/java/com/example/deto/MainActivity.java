@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         } else{
            counter--;
-            Info.setText("Number of attemts remaning:" + String.valueOf(counter));
+            Info.setText("Number of attemts remaning:" + counter);
 
             if(counter == 0){
                 Login.setEnabled(false);
