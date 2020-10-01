@@ -11,4 +11,12 @@
         android:layout_height="match_parent"
         android:text="Her kan du se en hurtig oversigt over de seneste notifikationer" />
 
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph"
+        android:layout_width="match_parent"
+        android:layout_height="379dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-2dp"
+        tools:layout_editor_absoluteY="155dp" />
+
 </FrameLayout>
