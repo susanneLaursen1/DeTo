@@ -52,7 +52,9 @@ public class Alarm extends AppCompatActivity {
                 .setSmallIcon(R.drawable.ic_android_black_24dp)
                 .setContentTitle("Det virker...")
                 .setContentText("My first notification")
-                .setPriority(NotificationCompat.PRIORITY_MAX);
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setDefaults(Notification.DEFAULT_SOUND);
+
         NotificationManagerCompat mNotificationMrg = NotificationManagerCompat.from(this);
         mNotificationMrg.notify(1,mBuilder.build());
 
