@@ -68,6 +68,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.delete(TABLE_NAME,"NAME=?",new String[] {name});
 
     }
-
 }
 
