@@ -59,7 +59,7 @@
 
     <EditText
         android:id="@+id/text4"
-        android:layout_width="195dp"
+        android:layout_width="184dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName" />
@@ -68,24 +68,24 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="@string/ADDDATA" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="@string/VIEWDATA" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="@string/DELETE" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="@string/UPDATE" />
 
 </LinearLayout>

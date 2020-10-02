@@ -12,4 +12,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="DATA">DATA</string>
+    <string name="ADDDATA">ADD DATA</string>
+    <string name="VIEWDATA">VIEW DATA</string>
+    <string name="DELETE">DELETE</string>
+    <string name="UPDATE">UPDATE</string>
 </resources>

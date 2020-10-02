@@ -17,14 +17,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_3 = "DATE";
     public static final String COL_4 = "NITRITVALUE";
 
-
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME +" (NAME TEXT,SURNAME TEXT,DATE TEXT,NITRITVALUE TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_NAME +" (NAME TEXT,SURNAME TEXT,DATE TEXT,NITRITVALUE TEXT)");
     }
 
     @Override
