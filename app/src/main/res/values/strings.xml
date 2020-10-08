@@ -16,4 +16,14 @@
     <string name="VIEWDATA">VIEW DATA</string>
     <string name="DELETE">DELETE</string>
     <string name="UPDATE">UPDATE</string>
+    <string name="EnterDate">Enter Date</string>
+    <string name="EnterSurname">Enter Surname</string>
+    <string name="EnterNitrivalue">Enter Nitrivalue</string>
+    <string name="InsertData">Insert Data</string>
+    <string name="EnterName">Enter Name</string>
+    <string name="Historik">Historik</string>
+    <string name="Kalibrering">Kalibrering</string>
+    <string name="Feedback">Feedback</string>
+    <string name="NAMEID" />
+    <string name="NAMEI">NAMEI</string>
 </resources>

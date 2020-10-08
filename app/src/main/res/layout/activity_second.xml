@@ -13,79 +13,87 @@
 
         android:id="@+id/tablayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="ExtraText">
         >
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/Tab1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Historik/oversigt" />
+            android:text="@string/Historik" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/Tab2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kalibering" />
+            android:text="@string/Kalibrering" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/Tab3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Feedback" />
+            android:text="@string/Feedback" />
 
     </com.google.android.material.tabs.TabLayout>
 
     <EditText
-        android:id="@+id/text"
-        android:layout_width="188dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/text2"
-        android:layout_width="188dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/text3"
-        android:layout_width="185dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/text4"
-        android:layout_width="184dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
-    <Button
-        android:id="@+id/button"
+        android:id="@+id/editTextname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ADDDATA" />
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:hint="@string/EnterName"
+        android:inputType="textPersonName"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/editTextsurname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:hint="@string/EnterSurname"
+        android:inputType="textPersonName"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/editTextdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:hint="@string/EnterDate"
+        android:inputType="textPersonName"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/editTextnitrit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:hint="@string/EnterNitrivalue"
+        android:inputType="textPersonName"
+        android:autofillHints="" />
+
+    <Button
+        android:id="@+id/buttoninsertdata"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="205dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="@string/InsertData" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="match_parent"
+        android:layout_width="205dp"
         android:layout_height="wrap_content"
-        android:text="@string/VIEWDATA" />
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        style="@style/Widget.AppCompat.Button.Colored" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/DELETE" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/UPDATE" />
 
 </LinearLayout>
