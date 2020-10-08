@@ -2,6 +2,7 @@ package com.example.deto;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.http.RequestQueue;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,11 +14,32 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
-
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.HashMap;
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 public class SecondActivity extends AppCompatActivity {
@@ -25,11 +47,12 @@ public class SecondActivity extends AppCompatActivity {
     private ViewPager viewpager;
     private TabItem tab1, tab2, tab3;
     public PageAdapter pagerAdapter;
-    EditText name, surname, date, nitritvalue;
-    Button insertdata;
+
+    private String ServerURL = "https://deto-system.000webhostapp.com/InsertData/add_data.php";
+    private EditText name, surname, date, nitritvalue;
+    private String TempName, TempSurname, TempDate, TempNitrit ;
+    private Button insertdata;
     ProgressDialog mProgressDialog;
-    //private static final String INSERTDATA_URL = "https://deto-system.000webhostapp.com/InsertData/add_data.php";
-    String ServerURL = "https://deto-system.000webhostapp.com/InsertData/add_data.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,92 +66,80 @@ public class SecondActivity extends AppCompatActivity {
         nitritvalue = (EditText) findViewById(R.id.editTextnitrit);
         insertdata = (Button) findViewById(R.id.buttoninsertdata);
 
-
         insertdata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String Name = name.getText().toString().trim().toLowerCase();
-                String Surname = surname.getText().toString().trim().toLowerCase();
-                String Date = date.getText().toString().trim().toLowerCase();
-                String Nitritvalue = nitritvalue.getText().toString().trim().toLowerCase();
 
-                if (Name.equals("")||Surname.equals("")||Date.equals("")||Nitritvalue.equals("")){
-                    Toast.makeText(SecondActivity.this, "Please Enter Detail", Toast.LENGTH_SHORT).show();
-                }
-                InsertData();
+                GetData();
+
+                InsertData(TempName, TempSurname, TempDate, TempNitrit);
 
             }
         });
-
     }
-
-    private void InsertData() {
-
-        String Name = name.getText().toString().trim().toLowerCase();
-        String Surname = surname.getText().toString().trim().toLowerCase();
-        String Date = date.getText().toString().trim().toLowerCase();
-        String Nitritvalue = nitritvalue.getText().toString().trim().toUpperCase();
-
-        if (Name.equals("") || Surname.equals("") || Date.equals("") || Nitritvalue.equals("")) {
+    public void GetData(){
+        TempName = name.getText().toString();
+        TempSurname = surname.getText().toString();
+        TempDate = date.getText().toString();
+        TempNitrit = nitritvalue.getText().toString();
+        if (TempName.equals("") || TempSurname.equals("") || TempDate.equals("") || TempNitrit.equals("")) {
             Toast.makeText(SecondActivity.this, "Please Enter Detail", Toast.LENGTH_SHORT).show();
-        } else {
-
-
-            register(Name, Surname, Date, Nitritvalue);
         }
     }
 
-    private void register(String Name, String Surname, String Date, String Nitritvalue) {
-        class RegisterUsers extends AsyncTask<String, Void, String> {
-            ProgressDialog loading;
-            RegisterUserClasses ruc = new RegisterUserClasses();
+    public void InsertData(final String name, final String surname, final String date, final String nitritvalue){
 
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                mProgressDialog = new ProgressDialog(SecondActivity.this);
-                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                mProgressDialog.setMessage("Please wait...");
-                mProgressDialog.setIndeterminate(true);
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.setProgress(0);
-                mProgressDialog.setProgressNumberFormat(null);
-                mProgressDialog.setProgressPercentFormat(null);
-                mProgressDialog.show();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                mProgressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(SecondActivity.this, SecondActivity.class);
-                startActivity(intent);
-            }
-
+        class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
             @Override
             protected String doInBackground(String... params) {
 
-                HashMap<String, String> data = new HashMap<String, String>();
+                String NameHolder = name ;
+                String SurnameHolder = surname ;
+                String DateHolder = date;
+                String NitritHolder = nitritvalue;
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+                nameValuePairs.add(new BasicNameValuePair("Name", NameHolder));
+                nameValuePairs.add(new BasicNameValuePair("Surname", SurnameHolder));
+                nameValuePairs.add(new BasicNameValuePair("Date", DateHolder));
+                nameValuePairs.add(new BasicNameValuePair("Nitritvalue", NitritHolder));
+
+                try {
+
+                    HttpClient httpClient = new DefaultHttpClient();
+
+                    HttpPost httpPost = new HttpPost(ServerURL);
+
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                    HttpResponse httpResponse = httpClient.execute(httpPost);
+
+                    HttpEntity httpEntity = httpResponse.getEntity();
 
 
-                data.put("Name", params[0]);
-                data.put("Surname", params[1]);
-                data.put("Date", params[2]);
-                data.put("Nitritvalue", params[3]);
+                } catch (ClientProtocolException e) {
 
+                } catch (IOException e) {
 
-                String result = ruc.sendPostRequest(ServerURL, data);
+                }
+                return "Data Inserted Successfully";
+            }
 
-                return result;
+            @Override
+            protected void onPostExecute(String result) {
+
+                super.onPostExecute(result);
+
+                Toast.makeText(SecondActivity.this, "Data Submit Successfully", Toast.LENGTH_LONG).show();
+
             }
         }
 
-        RegisterUsers ru = new RegisterUsers();
-        ru.execute(Name, Surname, Date, Nitritvalue);
-    }
+        SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
 
+        sendPostReqAsyncTask.execute(name, surname, date, nitritvalue);
+    }
 
 
             @Override //sætter menuen til at åbne den rigtige fane af alarm, graf eller vedligehold
