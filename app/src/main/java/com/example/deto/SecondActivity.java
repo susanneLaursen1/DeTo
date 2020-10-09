@@ -125,7 +125,6 @@ public class SecondActivity extends AppCompatActivity {
                 }
                 return "Data Inserted Successfully";
             }
-
             @Override
             protected void onPostExecute(String result) {
 
