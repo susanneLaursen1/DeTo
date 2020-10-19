@@ -6,9 +6,29 @@
     tools:context=".tab2">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:id="@+id/showdata"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Her kan du se hvornår der sidst blev kaliberet og af hvem, samt dato for næste kalibering" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:hint="Surname"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+    <EditText
+        android:id="@+id/enterName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter Name"/>
+
+    <Button
+        android:id="@+id/buttonfetch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/FetchData" />
+
 
 </FrameLayout>
