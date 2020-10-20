@@ -79,7 +79,7 @@ public class tab2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_tab1, container, false);
+        View view = inflater.inflate(R.layout.fragment_tab2, container, false);
 
         textV = view.findViewById(R.id.showdata);
         enterName = view.findViewById(R.id.enterName);
@@ -130,7 +130,7 @@ public class tab2 extends Fragment {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
             JSONObject collegeData = result.getJSONObject(0);
-            name = collegeData.getString(Config.KEY_Surname);
+            name = collegeData.getString(Config.KEY_Name);
 
         } catch (JSONException e) {
             e.printStackTrace();
