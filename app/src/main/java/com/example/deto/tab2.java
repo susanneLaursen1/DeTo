@@ -130,7 +130,7 @@ public class tab2 extends Fragment {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
             JSONObject collegeData = result.getJSONObject(0);
-            name = collegeData.getString(Config.KEY_Surname);
+            name = collegeData.getString(Config.KEY_Name);
 
         } catch (JSONException e) {
             e.printStackTrace();
