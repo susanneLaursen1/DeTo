@@ -19,7 +19,7 @@ public class KalibreringOgVedligehold extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kalibrering_og_vedligehold);
 
-        vid = (VideoView)findViewById(R.id.videoView);
+        //vid = (VideoView)findViewById(R.id.videoView);
     }
     public void playVideo(View v) {
         MediaController m = new MediaController(this);

@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.SimpleAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,6 +26,10 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,10 +42,9 @@ public class tab2 extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    TextView textV;
-    EditText enterName;
+    EditText txtvalue;
     Button btnfetch;
-
+    ListView listview;
 
 
     // TODO: Rename and change types of parameters
@@ -68,24 +75,30 @@ public class tab2 extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab2, container, false);
-
-        textV = view.findViewById(R.id.showdata);
-        enterName = view.findViewById(R.id.enterName);
+        txtvalue = view.findViewById(R.id.editText);
         btnfetch = view.findViewById(R.id.buttonfetch);
+        listview = view.findViewById(R.id.listView);
+
+
 
         btnfetch.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
                 RetrieveData();
@@ -96,14 +109,14 @@ public class tab2 extends Fragment {
     }
     private void RetrieveData() {
 
-        String value = enterName.getText().toString().trim();
+        String value = txtvalue.getText().toString().trim();
 
         if (value.equals("")) {
             Toast.makeText(getActivity(), "Please Enter Data Value", Toast.LENGTH_LONG).show();
             return;
         }
 
-        String url = Config.DATA_URL + enterName.getText().toString().trim();
+        String url = Config.DATA_URL + txtvalue.getText().toString().trim();
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
@@ -125,18 +138,42 @@ public class tab2 extends Fragment {
     }
 
     private void showJSON(String response) {
-        String name = "";
+        ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
-            JSONObject collegeData = result.getJSONObject(0);
-            name = collegeData.getString(Config.KEY_Name);
+
+            for (int i = 0; i < result.length(); i++) {
+                JSONObject jo = result.getJSONObject(i);
+                String name = jo.getString(Config.KEY_Name);
+                String surname = jo.getString(Config. KEY_Surname);
+                String date = jo.getString(Config.KEY_Date);
+                String nitritvalue = jo.getString(Config.KEY_Nitritvalue);
+
+
+
+                final HashMap<String, String> employees = new HashMap<>();
+                employees.put(Config.KEY_Name,  name);
+                employees.put(Config.KEY_Surname, surname);
+                employees.put(Config.KEY_Date, date);
+                employees.put(Config.KEY_Nitritvalue, nitritvalue);
+
+                list.add(employees);
+
+            }
+
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        textV.setText("" + name);
+        ListAdapter adapter = new SimpleAdapter(
+                getContext(), list, R.layout.activity_mylist,
+                new String[]{Config.KEY_Name, Config.KEY_Surname, Config.KEY_Date, Config.KEY_Nitritvalue},
+                new int[]{R.id.editTextname, R.id.editTextsurname, R.id.editTextdate, R.id.editTextnitrit});
+
+        listview.setAdapter(adapter);
 
     }
 }
+
 
