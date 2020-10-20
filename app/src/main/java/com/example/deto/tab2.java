@@ -132,7 +132,6 @@ public class tab2 extends Fragment {
             JSONObject collegeData = result.getJSONObject(0);
             name = collegeData.getString(Config.KEY_Surname);
 
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

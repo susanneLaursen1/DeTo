@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tab2">
+    tools:context=".tab2"
+    tools:ignore="MissingConstraints" >
+
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -12,22 +14,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="-200dp"
         android:gravity="center"
-        android:hint="Surname"
+        android:hint="Look upped surname"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <EditText
         android:id="@+id/enterName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="400dp"
         android:ems="10"
         android:hint="Enter Name"/>
+
 
     <Button
         android:id="@+id/buttonfetch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="500dp"
         android:text="@string/FetchData" />
 
 
