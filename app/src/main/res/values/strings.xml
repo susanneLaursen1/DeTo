@@ -26,4 +26,10 @@
     <string name="Feedback">Feedback</string>
     <string name="NAMEID" />
     <string name="NAMEI">NAMEI</string>
+    <string name="Patient">Patient</string>
+    <string name="FetchData">Fetch Data</string>
+    <string name="Text">Text</string>
+    <string name="RT">RT</string>
+    <string name="TEXT" />
+    <string name="kalibrering_og_vedligehold">Kalibrering og vedligehold</string>
 </resources>

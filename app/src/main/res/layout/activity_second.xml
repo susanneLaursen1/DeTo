@@ -11,7 +11,7 @@
 
     <com.google.android.material.tabs.TabLayout
 
-        android:id="@+id/tablayout"
+        android:id="@+id/tablay_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:ignore="ExtraText">
@@ -37,63 +37,10 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <EditText
-        android:id="@+id/editTextname"
+    <androidx.viewpager.widget.ViewPager
+
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:gravity="center"
-        android:hint="@string/EnterName"
-        android:inputType="textPersonName"
-        android:autofillHints="" />
-
-    <EditText
-        android:id="@+id/editTextsurname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:hint="@string/EnterSurname"
-        android:inputType="textPersonName"
-        android:autofillHints="" />
-
-    <EditText
-        android:id="@+id/editTextdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:hint="@string/EnterDate"
-        android:inputType="textPersonName"
-        android:autofillHints="" />
-
-    <EditText
-        android:id="@+id/editTextnitrit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:hint="@string/EnterNitrivalue"
-        android:inputType="textPersonName"
-        android:autofillHints="" />
-
-    <Button
-        android:id="@+id/buttoninsertdata"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="205dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="@string/InsertData" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="205dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
-        style="@style/Widget.AppCompat.Button.Colored" />
-
-
+        android:layout_height="match_parent" />
 
 </LinearLayout>
