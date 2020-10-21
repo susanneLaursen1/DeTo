@@ -11,7 +11,7 @@
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="100"
         android:hint="@string/EnterData"
@@ -21,12 +21,16 @@
         android:id="@+id/buttonfetch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="-200dp"
         android:text="@string/FetchData" />
 
     <ListView
         android:id="@+id/listView"
-        android:layout_width="89dp"
-        android:layout_height="441dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
         android:visibility="visible"></ListView>
 
 </FrameLayout>
