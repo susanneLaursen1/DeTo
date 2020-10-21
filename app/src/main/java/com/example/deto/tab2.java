@@ -145,7 +145,7 @@ public class tab2 extends Fragment {
 
             for (int i = 0; i < result.length(); i++) {
                 JSONObject jo = result.getJSONObject(i);
-                String name = jo.getString(Config.KEY_Name);
+                //String name = jo.getString(Config.KEY_Name);
                 String surname = jo.getString(Config. KEY_Surname);
                 String date = jo.getString(Config.KEY_Date);
                 String nitritvalue = jo.getString(Config.KEY_Nitritvalue);
@@ -153,7 +153,7 @@ public class tab2 extends Fragment {
 
 
                 final HashMap<String, String> employees = new HashMap<>();
-                employees.put(Config.KEY_Name,  name);
+                //employees.put(Config.KEY_Name,  name);
                 employees.put(Config.KEY_Surname, surname);
                 employees.put(Config.KEY_Date, date);
                 employees.put(Config.KEY_Nitritvalue, nitritvalue);
@@ -167,12 +167,11 @@ public class tab2 extends Fragment {
             e.printStackTrace();
         }
         ListAdapter adapter = new SimpleAdapter(
-                getContext(), list, R.layout.activity_mylist,
-                new String[]{Config.KEY_Name, Config.KEY_Surname, Config.KEY_Date, Config.KEY_Nitritvalue},
-                new int[]{R.id.editTextname, R.id.editTextsurname, R.id.editTextdate, R.id.editTextnitrit});
+                getActivity(), list, R.layout.activity_mylist,
+                new String[]{Config.KEY_Surname, Config.KEY_Date, Config.KEY_Nitritvalue},
+                new int[]{ R.id.editTextsurname, R.id.editTextdate, R.id.editTextnitrit});
 
         listview.setAdapter(adapter);
-
     }
 }
 
