@@ -6,9 +6,7 @@
     tools:context=".tab2"
     tools:ignore="MissingConstraints">
 
-
     <!-- TODO: Update blank fragment layout -->
-
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
@@ -16,17 +14,18 @@
         android:ems="100"
         android:hint="@string/EnterData"
         android:inputType="textPersonName" />
-
     <Button
         android:id="@+id/buttonfetch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="-300dp"
         android:text="@string/FetchData" />
-
     <ListView
         android:id="@+id/listView"
-        android:layout_width="89dp"
-        android:layout_height="441dp"
+        android:layout_width="wrap_content"
+        android:layout_height="733dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
         android:visibility="visible"></ListView>
-
 </FrameLayout>
