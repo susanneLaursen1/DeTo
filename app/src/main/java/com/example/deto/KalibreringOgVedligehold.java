@@ -1,14 +1,12 @@
 package com.example.deto;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.net.Uri;
 import android.os.Bundle;
-//import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.MediaController;
 import android.widget.VideoView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class KalibreringOgVedligehold extends AppCompatActivity {
     //create class reference
@@ -34,4 +32,4 @@ public class KalibreringOgVedligehold extends AppCompatActivity {
         vid.start();
 
     }
-}
+} //Link til tutorial: https://technobyte.org/play-video-file-android-studio-using-videoview-tutorial/
