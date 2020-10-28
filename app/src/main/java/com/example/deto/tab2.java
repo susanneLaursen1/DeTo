@@ -55,14 +55,7 @@ public class tab2 extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment tab2.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static tab2 newInstance(String param1, String param2) {
         tab2 fragment = new tab2();
@@ -90,15 +83,11 @@ public class tab2 extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab2, container, false);
-        txtvalue = view.findViewById(R.id.editText);
+        txtvalue = view.findViewById(R.id.EntedName);
         btnfetch = view.findViewById(R.id.buttonfetch);
         listview = view.findViewById(R.id.listView);
 
-
-
         btnfetch.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View view) {
                 RetrieveData();
@@ -108,37 +97,35 @@ public class tab2 extends Fragment {
 
     }
     private void RetrieveData() {
-
         String value = txtvalue.getText().toString().trim();
-
         if (value.equals("")) {
             Toast.makeText(getActivity(), "Please Enter Data Value", Toast.LENGTH_LONG).show();
             return;
-        }
+        }else{Toast.makeText(getActivity(), "Name entered", Toast.LENGTH_LONG).show();}
 
         String url = Config.DATA_URL + txtvalue.getText().toString().trim();
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 showJSON(response);
+                Toast.makeText(getActivity(),  "Nået her1", Toast.LENGTH_LONG).show();
             }
         },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),  "Lortet virker stadig ikke", Toast.LENGTH_LONG).show();
                     }
                 });
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
-
     }
 
     private void showJSON(String response) {
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
@@ -146,10 +133,10 @@ public class tab2 extends Fragment {
             for (int i = 0; i < result.length(); i++) {
                 JSONObject jo = result.getJSONObject(i);
                 //String name = jo.getString(Config.KEY_Name);
-                String surname = jo.getString(Config. KEY_Surname);
+                String surname = jo.getString(Config.KEY_Surname);
                 String date = jo.getString(Config.KEY_Date);
                 String nitritvalue = jo.getString(Config.KEY_Nitritvalue);
-
+                Toast.makeText(getActivity(),  "Nået heeeeer", Toast.LENGTH_LONG).show();
 
 
                 final HashMap<String, String> employees = new HashMap<>();
@@ -159,6 +146,8 @@ public class tab2 extends Fragment {
                 employees.put(Config.KEY_Nitritvalue, nitritvalue);
 
                 list.add(employees);
+                Toast.makeText(getActivity(),  "Succeeeee!", Toast.LENGTH_LONG).show();
+
 
             }
 
