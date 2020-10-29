@@ -45,6 +45,7 @@ public class tab2 extends Fragment {
     EditText txtvalue;
     Button btnfetch;
     ListView listview;
+    JSONObject jsonObject = null;
 
 
     // TODO: Rename and change types of parameters
@@ -109,7 +110,6 @@ public class tab2 extends Fragment {
             @Override
             public void onResponse(String response) {
                 showJSON(response);
-                Toast.makeText(getActivity(),  "Nået her1", Toast.LENGTH_LONG).show();
             }
         },
                 new Response.ErrorListener() {
@@ -125,29 +125,24 @@ public class tab2 extends Fragment {
 
     private void showJSON(String response) {
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
-
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
 
             for (int i = 0; i < result.length(); i++) {
                 JSONObject jo = result.getJSONObject(i);
-                //String name = jo.getString(Config.KEY_Name);
-                String surname = jo.getString(Config.KEY_Surname);
+                String name = jo.getString(Config. KEY_Name);
+                String surname = jo.getString(Config. KEY_Surname);
                 String date = jo.getString(Config.KEY_Date);
                 String nitritvalue = jo.getString(Config.KEY_Nitritvalue);
-                Toast.makeText(getActivity(),  "Nået heeeeer", Toast.LENGTH_LONG).show();
-
 
                 final HashMap<String, String> employees = new HashMap<>();
-                //employees.put(Config.KEY_Name,  name);
+                employees.put(Config.KEY_Name,  name);
                 employees.put(Config.KEY_Surname, surname);
                 employees.put(Config.KEY_Date, date);
                 employees.put(Config.KEY_Nitritvalue, nitritvalue);
 
                 list.add(employees);
-                Toast.makeText(getActivity(),  "Succeeeee!", Toast.LENGTH_LONG).show();
-
 
             }
 
@@ -157,10 +152,11 @@ public class tab2 extends Fragment {
         }
         ListAdapter adapter = new SimpleAdapter(
                 getActivity(), list, R.layout.activity_mylist,
-                new String[]{Config.KEY_Surname, Config.KEY_Date, Config.KEY_Nitritvalue},
-                new int[]{ R.id.editTextsurname, R.id.editTextdate, R.id.editTextnitrit});
-
+                new String[]{Config.KEY_Name, Config.KEY_Surname, Config.KEY_Date, Config.KEY_Nitritvalue},
+                new int[]{R.id.e_name, R.id.e_surname, R.id.e_date, R.id.e_nitritvalue});
         listview.setAdapter(adapter);
+        Toast.makeText(getActivity(),  "Succeee", Toast.LENGTH_LONG).show();
+
     }
 }
 
