@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SyncAdapter xmlns:android="http://schemas.android.com/apk/res/android">
+    <sync-adapter
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".SyncAdapter"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:contentAuthority="com.example.deto.provider"
+        android:accountType="com.android.example.datasync"
+        android:userVisible="false"
+        android:supportsUploading="false"
+        android:allowParallelSyncs="false"
+        android:isAlwaysSyncable="true"/>
+</SyncAdapter>

@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         if((UserName.equals("Deto")) && (UserPassword.equals("2020"))){
             Intent i = new Intent(MainActivity.this,SecondActivity.class);
             startActivity(i);
+
+            Intent j = new Intent(MainActivity.this,SyncMainActivity.class);
+            startActivity(j);
         } else{
            counter--;
             Info.setText("Number of attemts remaning:" + counter);

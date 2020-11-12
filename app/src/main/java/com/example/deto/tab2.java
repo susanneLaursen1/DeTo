@@ -1,6 +1,7 @@
 package com.example.deto;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -30,6 +31,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +53,10 @@ public class tab2 extends Fragment {
     Button btnfetch;
     ListView listview;
     JSONObject jsonObject = null;
+
+    private static final String Channel_Id = "Simplified_coding";
+    private static final String Channel_Name = "Simplified Coding";
+    private static final String Channel_Desc = "Simplified Coding Notification";
 
 
     // TODO: Rename and change types of parameters
@@ -76,6 +87,13 @@ public class tab2 extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
 
         }
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel(Channel_Id,Channel_Name, NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(Channel_Desc);
+            NotificationManager manger = getActivity().getSystemService(NotificationManager.class);
+            manger.createNotificationChannel(channel);
+        }
     }
 
     @Override
@@ -97,13 +115,12 @@ public class tab2 extends Fragment {
         return view;
 
     }
-    private void RetrieveData() {
+    public void RetrieveData() {
         String value = txtvalue.getText().toString().trim();
         if (value.equals("")) {
             Toast.makeText(getActivity(), "Please Enter Data Value", Toast.LENGTH_LONG).show();
             return;
-        }else{Toast.makeText(getActivity(), "Name entered", Toast.LENGTH_LONG).show();}
-
+        }
         String url = Config.DATA_URL + txtvalue.getText().toString().trim();
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
@@ -115,7 +132,7 @@ public class tab2 extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),  "Lortet virker stadig ikke", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),  "Fejl i at hente data", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -123,7 +140,7 @@ public class tab2 extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void showJSON(String response) {
+    public void showJSON(String response) {
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -144,6 +161,11 @@ public class tab2 extends Fragment {
 
                 list.add(employees);
 
+                double nitrit_over = Double.valueOf(nitritvalue);
+                if(nitrit_over >= 0.06){
+                    displayNotification();
+                }
+
             }
 
 
@@ -155,9 +177,20 @@ public class tab2 extends Fragment {
                 new String[]{Config.KEY_Name, Config.KEY_Surname, Config.KEY_Date, Config.KEY_Nitritvalue},
                 new int[]{R.id.e_name, R.id.e_surname, R.id.e_date, R.id.e_nitritvalue});
         listview.setAdapter(adapter);
-        Toast.makeText(getActivity(),  "Succeee", Toast.LENGTH_LONG).show();
+
+    }
+
+    public void displayNotification(){
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getActivity(),Channel_Id)
+                .setSmallIcon(R.drawable.ic_android_black_24dp)
+                .setContentTitle("En borger har tegn på urinvejsinfektion")
+                .setContentText("Se yderligere oplysninger i DeTo")
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setDefaults(Notification.DEFAULT_SOUND)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+        NotificationManagerCompat mNotificationMrg = NotificationManagerCompat.from(getActivity());
+        mNotificationMrg.notify(1,mBuilder.build());
 
     }
 }
-
-
