@@ -1,9 +1,9 @@
 package com.example.deto;
-import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -27,5 +27,5 @@ public class Deterenproeve extends AppCompatActivity {
         stopService(serviceIntent);
 
     }
-}
 
+}

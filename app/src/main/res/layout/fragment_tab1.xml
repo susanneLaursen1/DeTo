@@ -4,6 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".tab1">
+
+    <Button
+        android:id="@+id/kald"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kald på forground" />
+
 </FrameLayout>
 
 
