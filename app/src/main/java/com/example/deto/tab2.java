@@ -1,6 +1,8 @@
 package com.example.deto;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -30,22 +32,23 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link tab2#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class tab2 extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     EditText txtvalue;
     Button btnfetch;
+    Button btnvisgraf;
+
     ListView listview;
     JSONObject jsonObject = null;
+
+    private static final String Channel_Id = "Simplified_coding";
+    private static final String Channel_Name = "Simplified Coding";
+    private static final String Channel_Desc = "Simplified Coding Notification";
 
 
     // TODO: Rename and change types of parameters
@@ -61,8 +64,6 @@ public class tab2 extends Fragment {
     public static tab2 newInstance(String param1, String param2) {
         tab2 fragment = new tab2();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,10 +72,12 @@ public class tab2 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel(Channel_Id,Channel_Name, NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(Channel_Desc);
+            NotificationManager manger = getActivity().getSystemService(NotificationManager.class);
+            manger.createNotificationChannel(channel);
         }
     }
 
@@ -87,6 +90,8 @@ public class tab2 extends Fragment {
         txtvalue = view.findViewById(R.id.EntedName);
         btnfetch = view.findViewById(R.id.buttonfetch);
         listview = view.findViewById(R.id.listView);
+        btnvisgraf = view.findViewById(R.id.VisGraf);
+
 
         btnfetch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +99,15 @@ public class tab2 extends Fragment {
                 RetrieveData();
             }
         });
+
+        btnvisgraf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(),DisplayData.class);
+                startActivity(i);
+            }
+        });
+
         return view;
 
     }
@@ -102,8 +116,7 @@ public class tab2 extends Fragment {
         if (value.equals("")) {
             Toast.makeText(getActivity(), "Please Enter Data Value", Toast.LENGTH_LONG).show();
             return;
-        }else{Toast.makeText(getActivity(), "Name entered", Toast.LENGTH_LONG).show();}
-
+        }
         String url = Config.DATA_URL + txtvalue.getText().toString().trim();
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
@@ -144,6 +157,11 @@ public class tab2 extends Fragment {
 
                 list.add(employees);
 
+                double nitrit_over = Double.valueOf(nitritvalue);
+                if(nitrit_over >= 0.06){
+                    displayNotification();
+                }
+
             }
 
 
@@ -155,7 +173,20 @@ public class tab2 extends Fragment {
                 new String[]{Config.KEY_Name, Config.KEY_Surname, Config.KEY_Date, Config.KEY_Nitritvalue},
                 new int[]{R.id.e_name, R.id.e_surname, R.id.e_date, R.id.e_nitritvalue});
         listview.setAdapter(adapter);
-        Toast.makeText(getActivity(),  "Succeee", Toast.LENGTH_LONG).show();
+
+    }
+
+    private void displayNotification(){
+       NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getActivity(),Channel_Id)
+                .setSmallIcon(R.drawable.ic_android_black_24dp)
+                .setContentTitle("En borger har tegn på urinvejsinfektion")
+                .setContentText("Se yderligere oplysninger i DeTo")
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setDefaults(Notification.DEFAULT_SOUND)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+        NotificationManagerCompat mNotificationMrg = NotificationManagerCompat.from(getActivity());
+        mNotificationMrg.notify(1,mBuilder.build());
 
     }
 }

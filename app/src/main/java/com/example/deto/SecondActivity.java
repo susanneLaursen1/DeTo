@@ -1,9 +1,9 @@
 package com.example.deto;
 import android.os.Bundle;
-import android.app.ProgressDialog;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -23,7 +23,6 @@ public class SecondActivity extends AppCompatActivity {
     private tab1 tab1;
     private tab2 tab2;
     private tab3 tab3;
-    ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

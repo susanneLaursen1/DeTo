@@ -4,56 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".tab1">
-
-    <!-- TODO: Update blank fragment layout -->
-
-    <EditText
-        android:id="@+id/editTextname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:autofillHints=""
-        android:gravity="center"
-        android:hint="@string/EnterName"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/editTextsurname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:gravity="center"
-        android:hint="@string/EnterSurname"
-        android:inputType="textPersonName"
-        android:autofillHints="" />
-
-    <EditText
-        android:id="@+id/editTextdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:gravity="center"
-        android:hint="@string/EnterDate"
-        android:inputType="textPersonName"
-        android:autofillHints="" />
-
-
-    <EditText
-        android:id="@+id/editTextnitrit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
-        android:autofillHints=""
-        android:gravity="center"
-        android:hint="@string/EnterNitrivalue"
-        android:inputType="textPersonName" />
-
-    <Button
-        android:id="@+id/buttoninsertdata"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="200dp"
-        android:text="@string/InsertData" />
 </FrameLayout>
+
+
+
+
