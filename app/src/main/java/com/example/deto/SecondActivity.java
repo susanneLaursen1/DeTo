@@ -1,14 +1,9 @@
 package com.example.deto;
-import android.content.Intent;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.ProgressDialog;
-import android.view.View;
-import android.widget.EditText;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -21,7 +16,6 @@ import java.util.List;
 
 
 
-
 public class SecondActivity extends AppCompatActivity {
     private TabLayout tablayout;
     private ViewPager viewpager;
@@ -29,9 +23,6 @@ public class SecondActivity extends AppCompatActivity {
     private tab1 tab1;
     private tab2 tab2;
     private tab3 tab3;
-    ProgressDialog mProgressDialog;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,19 +43,16 @@ public class SecondActivity extends AppCompatActivity {
         viewpagerAdapter.addFragment(tab3, "Kalibering");
 
         viewpager.setAdapter(viewpagerAdapter);
-
-
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
         private List<Fragment> fragments = new ArrayList<>();
         private List<String> fragmentTitle = new ArrayList<>();
-
         public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
             super(fm, behavior);
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        public void addFragment(Fragment fragment, String title){
             fragments.add(fragment);
             fragmentTitle.add(title);
 
@@ -87,7 +75,6 @@ public class SecondActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return fragmentTitle.get(position);
         }
-
     }
 }
 

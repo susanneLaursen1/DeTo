@@ -1,6 +1,7 @@
 package com.example.deto;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -37,20 +38,11 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link tab2#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class tab2 extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     EditText txtvalue;
     Button btnfetch;
+    Button btnvisgraf;
+
     ListView listview;
     JSONObject jsonObject = null;
 
@@ -72,8 +64,6 @@ public class tab2 extends Fragment {
     public static tab2 newInstance(String param1, String param2) {
         tab2 fragment = new tab2();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,11 +72,6 @@ public class tab2 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-
-        }
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel(Channel_Id,Channel_Name, NotificationManager.IMPORTANCE_DEFAULT);
@@ -105,6 +90,8 @@ public class tab2 extends Fragment {
         txtvalue = view.findViewById(R.id.EntedName);
         btnfetch = view.findViewById(R.id.buttonfetch);
         listview = view.findViewById(R.id.listView);
+        btnvisgraf = view.findViewById(R.id.VisGraf);
+
 
         btnfetch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,10 +99,19 @@ public class tab2 extends Fragment {
                 RetrieveData();
             }
         });
+
+        btnvisgraf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(),DisplayData.class);
+                startActivity(i);
+            }
+        });
+
         return view;
 
     }
-    public void RetrieveData() {
+    private void RetrieveData() {
         String value = txtvalue.getText().toString().trim();
         if (value.equals("")) {
             Toast.makeText(getActivity(), "Please Enter Data Value", Toast.LENGTH_LONG).show();
@@ -132,7 +128,7 @@ public class tab2 extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),  "Fejl i at hente data", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),  "Lortet virker stadig ikke", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -140,7 +136,7 @@ public class tab2 extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    public void showJSON(String response) {
+    private void showJSON(String response) {
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -180,8 +176,8 @@ public class tab2 extends Fragment {
 
     }
 
-    public void displayNotification(){
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getActivity(),Channel_Id)
+    private void displayNotification(){
+       NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getActivity(),Channel_Id)
                 .setSmallIcon(R.drawable.ic_android_black_24dp)
                 .setContentTitle("En borger har tegn på urinvejsinfektion")
                 .setContentText("Se yderligere oplysninger i DeTo")
@@ -194,3 +190,5 @@ public class tab2 extends Fragment {
 
     }
 }
+
+
