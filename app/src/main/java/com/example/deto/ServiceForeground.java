@@ -6,18 +6,25 @@ import androidx.core.app.NotificationManagerCompat;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
 import static com.example.deto.ForegroundWorker.CHANNEL_ID;
 public class ServiceForeground extends Service {
+    public Runnable mRunnable = null;
     @Override
     public void onCreate() {
         super.onCreate();
     }
+    //final Handler mHandler = new Handler();
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        //NYT
+        //mHandler.postDelayed(mRunnable, 10 * 1000);
+        //NYT
         String input = intent.getStringExtra("inputExtra");
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
@@ -31,8 +38,11 @@ public class ServiceForeground extends Service {
         startForeground(1, notification);
         //do heavy work on a background thread
         //stopSelf();
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
+    //mHandler.postDelayed(mRunnable, 10 * 1000);
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
