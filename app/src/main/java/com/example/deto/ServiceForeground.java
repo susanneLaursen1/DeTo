@@ -11,7 +11,9 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 import static com.example.deto.ForegroundWorker.CHANNEL_ID;
+
 public class ServiceForeground extends Service {
+    int sleepTime; //sleeptime in milliseconds
     @Override
     public void onCreate() {
         super.onCreate();
@@ -19,7 +21,7 @@ public class ServiceForeground extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String input = intent.getStringExtra("inputExtra");
-        Intent notificationIntent = new Intent(this, MainActivity.class);
+        Intent notificationIntent = new Intent(this, SecondActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
@@ -31,7 +33,8 @@ public class ServiceForeground extends Service {
         startForeground(1, notification);
         //do heavy work on a background thread
         //stopSelf();
-        return START_NOT_STICKY;
+        sleepTime = intent.getIntExtra("EKSTRA_KEY_SLEEPTIME", 3000);
+        return START_STICKY;
     }
     @Override
     public void onDestroy() {

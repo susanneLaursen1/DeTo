@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
-        android:name=".ForegroundWorker"
+
 
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,10 +19,11 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-
+        <activity android:name=".Deterenproeve"/>
         <activity android:name=".SecondActivity" />
         <activity android:name=".mylist" />
         <activity android:name=".MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

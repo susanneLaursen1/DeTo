@@ -111,7 +111,7 @@ public class tab2 extends Fragment {
         return view;
 
     }
-    private void RetrieveData() {
+    public void RetrieveData() {
         String value = txtvalue.getText().toString().trim();
         if (value.equals("")) {
             Toast.makeText(getActivity(), "Please Enter Data Value", Toast.LENGTH_LONG).show();
@@ -128,7 +128,7 @@ public class tab2 extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),  "Lortet virker stadig ikke", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),  "Fejl i at hente data", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -136,7 +136,7 @@ public class tab2 extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void showJSON(String response) {
+    public void showJSON(String response) {
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -176,7 +176,7 @@ public class tab2 extends Fragment {
 
     }
 
-    private void displayNotification(){
+    public void displayNotification(){
        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getActivity(),Channel_Id)
                 .setSmallIcon(R.drawable.ic_android_black_24dp)
                 .setContentTitle("En borger har tegn på urinvejsinfektion")
