@@ -1,18 +1,9 @@
 package com.example.deto;
-import android.app.Notification;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,53 +17,25 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-import static com.example.deto.ForegroundWorker.CHANNEL_ID;
-
-public class ServiceForeground extends Service {
+public class MyService extends Service {
     private final IBinder iBinder = new LocalBinder();
+    private List<HashMap<String, String>> list;
+
+
     public class LocalBinder extends Binder {
-        ServiceForeground getservice (){
-            return ServiceForeground.this;
+        MyService getservice (){
+            return MyService.this;
         }
     }
-    int sleepTime; //sleeptime in milliseconds
-    @Override
-    public void onCreate() {
-        super.onCreate();
+    public MyService() {
     }
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        String input = intent.getStringExtra("inputExtra");
-        Intent notificationIntent = new Intent(this, SecondActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                0, notificationIntent, 0);
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Foreground Service")
-                .setContentText(input)
-                .setSmallIcon(R.drawable.ic_android)
-                .setContentIntent(pendingIntent)
-                .build();
-        startForeground(1, notification);
-        //do heavy work on a background thread
-        //stopSelf();
-        sleepTime = intent.getIntExtra("EKSTRA_KEY_SLEEPTIME", 3000);
-        return START_STICKY;
 
-        //Tidsfaktor Hver time eller lign.
-    }
-    @Override
-    public void onDestroy() {
-
-        super.onDestroy();
-    }
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-
         return iBinder;
     }
-
     public void RetrieveData() {
         String url = Config.DATA_URL;
 
@@ -91,9 +54,8 @@ public class ServiceForeground extends Service {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
-
     public void showJSON(String response) {
-        ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+        list = new ArrayList<HashMap<String, String>>();
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
@@ -112,15 +74,13 @@ public class ServiceForeground extends Service {
                 employees.put(Config.KEY_Nitritvalue, nitritvalue);
 
                 list.add(employees);
-
-
             }
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+    }
+    public List<HashMap<String, String>> getList() {
+       return list;
     }
 }
 
