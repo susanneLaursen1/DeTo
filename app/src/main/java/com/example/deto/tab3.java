@@ -42,7 +42,6 @@ public class tab3 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tab3, container, false);
 
        //Første video
-
         myVideo1  = view.findViewById(R.id.video_view);
         myVideo1.requestFocus();
         myVideo1.setVideoURI(getPath(index));
