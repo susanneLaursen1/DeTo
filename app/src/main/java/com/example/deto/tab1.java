@@ -35,15 +35,9 @@ public class tab1 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tab1, container, false);
 
         btnkald = view.findViewById(R.id.kald);
-        btnkald.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getActivity(),Deterenproeve.class);
-                startActivity(i);
-            }
-        });
 
         return view;
-    }
 
+
+    }
 }
