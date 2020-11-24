@@ -16,7 +16,7 @@ import java.util.List;
 
 
 
-public class SecondActivity extends AppCompatActivity {
+public class  SecondActivity extends AppCompatActivity {
     private TabLayout tablayout;
     private ViewPager viewpager;
 
