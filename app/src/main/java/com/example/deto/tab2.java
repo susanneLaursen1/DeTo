@@ -27,19 +27,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import static com.example.deto.MyBoundService.SERVICE_TASK_RESULT_COMPLETE;
-import static com.example.deto.MyBoundService.EKSTRA_KEY_BROADCAST_RESULT;
 import static com.example.deto.MyBoundService.EKSTRA_KEY_BROADCAST_NAME_RESULT;
 
 public class tab2 extends Fragment {
     private static final String TAG = "Tab2";
     public static final String EXTRA_NAME_SURNAME = "EXTRA_Name_Surname";
-    private ListView listViewItems;
-    TextView viewName, viewSurname;
+    private Spinner spinner;
+    private  String SelectedName;
+    ListView listViewPatientData;
+    TextView textViewPatientName;
 
     // TODO: Rename and change types and number of parameters
     public static tab2 newInstance(String param1, String param2) {
@@ -58,12 +70,9 @@ public class tab2 extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab2, container, false);
-        listViewItems = view.findViewById(R.id.listViewItems);
-
-
-        viewName = view.findViewById(R.id.e_name);
-        viewSurname = view.findViewById(R.id.e_surname);
-
+        spinner = (Spinner) view.findViewById(R.id.spinner);
+        listViewPatientData = view.findViewById(R.id.listViewPatientData);
+        textViewPatientName = view.findViewById(R.id.textviewPatientName);
         return view;
 
     }
@@ -80,50 +89,92 @@ public class tab2 extends Fragment {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(backgroundServiceResulstReceiver);
     }
 
-
-
-
     //Broadcast
     private BroadcastReceiver backgroundServiceResulstReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent broadcatedResult) {
             if(broadcatedResult!=null){
-                ArrayList result = broadcatedResult.getStringArrayListExtra(EKSTRA_KEY_BROADCAST_RESULT);
                 ArrayList nameresult = broadcatedResult.getStringArrayListExtra(EKSTRA_KEY_BROADCAST_NAME_RESULT);
                 if(nameresult!=null){
-                    ViewData(nameresult);
+                    SelectName(nameresult);
                 }
+
             }
         }
     };
 
-    private void ViewData(ArrayList res){
-        // Store unique items in result.
-        ArrayList result = new ArrayList();
-        // Record encountered Strings in HashSet.
-        HashSet set = new HashSet();
-
-        // Loop over argument list.
-        for (Object item : res) {
-            if (!set.contains(item)) {
-                result.add(item);
-                set.add(item);
+    public void SelectName(ArrayList res){
+        ArrayAdapter<ArrayList> arrayadapter = new ArrayAdapter<ArrayList>(
+                getActivity(),
+                android.R.layout.simple_spinner_item, res);
+        arrayadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayadapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+             if(parent.getItemAtPosition(position).equals("Select a Name")) { //Do nothing
+             }
+             else{
+                 String str = parent.getItemAtPosition(position).toString();
+                 Toast.makeText(getActivity(), "Selected " + str, Toast.LENGTH_LONG).show();
+                 SelectedName = str.split(" ")[0];
+                 textViewPatientName.setText(str);
+                 getPatientData();
+             }
             }
 
-            ListAdapter adapter = new SimpleAdapter(
-                    getActivity(), result, R.layout.activity_mylist,
-                    new String[]{Config.KEY_Name, Config.KEY_Surname},
-                    new int[]{R.id.e_name,R.id.e_surname});
-            listViewItems.setAdapter(adapter);
-            listViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String Navnvalgt  =  listViewItems.getItemAtPosition(position).toString();
-                    Toast.makeText(getActivity()," Navnet" + Navnvalgt,Toast.LENGTH_SHORT).show();
-                }
-            });
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(getActivity(), "Please Enter Data Value", Toast.LENGTH_LONG).show();
 
+            }
+        });
+    }
+
+
+    private void getPatientData() {
+        String url = Config.DATA_URL_PatientData + SelectedName;
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                showPatientData(response);
+            }
+
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(stringRequest);
+    }
+    private void showPatientData(String response) {
+        ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
+
+            for (int i = 0; i < result.length(); i++) {
+                JSONObject jo = result.getJSONObject(i);
+                String date = jo.getString(Config.KEY_Date_p);
+                String nitritvalue = jo.getString(Config.KEY_Nitritvalue_p);
+
+                final HashMap<String, String> patientData = new HashMap<>();
+                patientData.put(Config.KEY_Date_p, date);
+                patientData.put(Config.KEY_Nitritvalue_p, nitritvalue);
+                list.add(patientData);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+        ArrayAdapter<HashMap<String, String>>  itemsAdapter =
+                new ArrayAdapter<HashMap<String, String>> (getContext(), android.R.layout.simple_list_item_1, (list));
+        listViewPatientData.setAdapter(itemsAdapter);
 
     }
 

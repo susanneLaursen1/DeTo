@@ -38,11 +38,10 @@ public class MyBoundService extends Service {
     private static final String Channel_Name = "Simplified Coding";
     private static final String Channel_Desc = "Simplified Coding Notification";
 
-    public static final String SERVICE_TASK_RESULT_COMPLETE = "Service_Task_Result_Complete";
-    public static final String EKSTRA_KEY_BROADCAST_RESULT = "EKSTRA_KEY_BROADCAST_RESULT";
-    public static final String EKSTRA_KEY_BROADCAST_MESSAGE = "EKSTRA_KEY_BROADCAST_MESSAGE";
     public static final String SERVICE_TASK_MESSAGE_COMPLETE = "Notification_Message_Complete";
+    public static final String EKSTRA_KEY_BROADCAST_MESSAGE = "EKSTRA_KEY_BROADCAST_MESSAGE";
 
+    public static final String SERVICE_TASK_RESULT_COMPLETE = "Service_Task_Result_Complete";
     public static final String EKSTRA_KEY_BROADCAST_NAME_RESULT ="EKSTRA_KEY_BROADCAST_NAME_RESULT" ;
 
 
@@ -52,10 +51,10 @@ public class MyBoundService extends Service {
     private Double Nitritvalue;
 
     String Context;
-    private String Title;
+    String namesss;
 
-    ArrayList<HashMap<String, String>> list;
-    ArrayList<HashMap<String, String>> namelist;
+    private String Title;
+    ArrayList<String> namelist;
 
     ArrayList<String> contextList;
 
@@ -75,7 +74,6 @@ public class MyBoundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        list = null;
         namelist = null;
         contextList = null;
         running = true;
@@ -90,6 +88,8 @@ public class MyBoundService extends Service {
                         e.printStackTrace();
                     }
                     getData();
+                    getNames();
+
 
                 }
             }
@@ -126,10 +126,7 @@ public class MyBoundService extends Service {
     }
 
     private void showJSON(String response) {
-        list = new ArrayList<HashMap<String, String>>();
-        namelist  = new ArrayList<HashMap<String, String>>();
         contextList = new ArrayList<String>();
-
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
@@ -141,35 +138,23 @@ public class MyBoundService extends Service {
                 String date = jo.getString(Config.KEY_Date);
                 String nitritvalue = jo.getString(Config.KEY_Nitritvalue);
 
-                final HashMap<String, String> names = new HashMap<>();
-                names.put(Config.KEY_Name,  name);
-                names.put(Config.KEY_Surname, surname);
-                namelist.add(names);
-
                 final HashMap<String, String> employees = new HashMap<>();
                 employees.put(Config.KEY_Name,  name);
                 employees.put(Config.KEY_Surname, surname);
                 employees.put(Config.KEY_Date, date);
                 employees.put(Config.KEY_Nitritvalue, nitritvalue);
 
-                list.add(employees);
-                sendTaskResultAsBroadcast(list, namelist);
-
                 Nitritvalue = Double.valueOf(nitritvalue);
                 if(Nitritvalue >= 15){
-
                     Name = name;
                     Surname = surname;
                     Date = date;
                     Title = "Borger " + Name + " " +Surname + " har tegn på urinvejsinfektion";
                     Context = "Det blev d." + Date + " detekteret at " + Name + " " +Surname + " har en nitritværdi på "+ Nitritvalue;
                     contextList.add(Context);
-                    Log.d(TAG, "showJSON: " + contextList.size());
                     sendMessageAsBroadcast(contextList);
                     displayNotification();
                 }
-
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -190,18 +175,66 @@ public class MyBoundService extends Service {
         mNotificationMrg.notify(1,mBuilder.build());
 
     }
-    private void sendTaskResultAsBroadcast(ArrayList result, ArrayList nameresult){
-        Intent broadcastintent = new Intent();
-        broadcastintent.setAction(SERVICE_TASK_RESULT_COMPLETE);
-        broadcastintent.putExtra(EKSTRA_KEY_BROADCAST_RESULT, result).putExtra(EKSTRA_KEY_BROADCAST_NAME_RESULT, nameresult);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastintent);
-    }
+
 
     private void sendMessageAsBroadcast(ArrayList message){
         Intent mbroadcastintent = new Intent();
         mbroadcastintent.setAction(SERVICE_TASK_MESSAGE_COMPLETE);
         mbroadcastintent.putExtra(EKSTRA_KEY_BROADCAST_MESSAGE, message);
         LocalBroadcastManager.getInstance(this).sendBroadcast(mbroadcastintent);
+    }
+
+    private void getNames() {
+        String url = Config.DATA_URL_NameSurname;
+
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                showJSONNames(response);
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(MyBoundService.this);
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void showJSONNames(String response) {
+        namelist  =  new ArrayList<String>();
+        namelist.add(0,"Select a Name");
+
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
+
+            for (int i = 0; i < result.length(); i++) {
+                JSONObject jo = result.getJSONObject(i);
+                String name = jo.getString(Config. KEY_Name_n);
+                String surname = jo.getString(Config. KEY_Surname_n);
+
+                final HashMap<String, String> names = new HashMap<>();
+                names.put(Config.KEY_Name_n,  name);
+                names.put(Config.KEY_Surname_n, surname);
+
+                namesss = name + " " + surname;
+                namelist.add(namesss);
+                sendTaskResultAsBroadcast(namelist);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sendTaskResultAsBroadcast(ArrayList nameresult){
+        Intent broadcastintent = new Intent();
+        broadcastintent.setAction(SERVICE_TASK_RESULT_COMPLETE);
+        broadcastintent.putExtra(EKSTRA_KEY_BROADCAST_NAME_RESULT, nameresult);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastintent);
     }
 
 

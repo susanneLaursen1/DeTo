@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.deto.MyBoundService.EKSTRA_KEY_BROADCAST_MESSAGE;
-import static com.example.deto.MyBoundService.EKSTRA_KEY_BROADCAST_NAME_RESULT;
-import static com.example.deto.MyBoundService.EKSTRA_KEY_BROADCAST_RESULT;
 import static com.example.deto.MyBoundService.SERVICE_TASK_MESSAGE_COMPLETE;
 public class tab1 extends Fragment {
     private static final String TAG = "Tab1";
@@ -81,8 +79,6 @@ public class tab1 extends Fragment {
             }
         }
         private void viewData(ArrayList<String> message) {
-            Log.d(TAG, "viewData: " + message.size());
-
             ArrayList<String> messageList = new ArrayList<String>();
             for (String m : message) {
                 String Smessage = message.toString();
@@ -91,7 +87,6 @@ public class tab1 extends Fragment {
             ArrayAdapter<String> itemsAdapter =
                     new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, (messageList));
             listViewNoti.setAdapter(itemsAdapter);
-           // Log.d(TAG, "viewData: " + message);
 
         }
     };
