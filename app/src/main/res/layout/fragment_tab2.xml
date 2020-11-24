@@ -8,29 +8,17 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context="com.example.deto.tab1"
+    tools:context="com.example.deto.tab2"
     android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="Enter Name"
-        android:ems="10"
-        android:id="@+id/EntedName" />
 
-    <Button
-        android:text="Fetch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonfetch" />
 
-    <Button
-        android:id="@+id/VisGraf"
+    <ListView
+        android:id="@+id/listViewItems"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Vis Graf" />
+        android:layout_height="match_parent"/>
+
 
 
 </LinearLayout>

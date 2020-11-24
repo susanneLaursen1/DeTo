@@ -8,4 +8,5 @@ public class Config {
     public static final String KEY_Date =  "Date";
     public static final String KEY_Nitritvalue =  "Nitritvalue";
     public static final String JSON_ARRAY = "result";
+
 }

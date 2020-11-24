@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".MyService"
+            android:name=".MyBoundService"
             android:enabled="true"
             android:exported="true"></service>
 
@@ -24,7 +24,6 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".Deterenproeve" />
         <activity android:name=".SecondActivity" />
         <activity android:name=".mylist" />
         <activity android:name=".MainActivity">
@@ -34,8 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service android:name=".ServiceForeground" />
     </application>
 
 </manifest>
