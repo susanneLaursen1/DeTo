@@ -82,14 +82,12 @@ public class MyBoundService extends Service {
             @Override
             public void run() {
                 while(running){
+                    getData();
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(50000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    getData();
-                    getNames();
-
 
                 }
             }
@@ -126,6 +124,8 @@ public class MyBoundService extends Service {
     }
 
     private void showJSON(String response) {
+        namelist  =  new ArrayList<String>();
+        namelist.add(0,"Select a Name");
         contextList = new ArrayList<String>();
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -144,8 +144,12 @@ public class MyBoundService extends Service {
                 employees.put(Config.KEY_Date, date);
                 employees.put(Config.KEY_Nitritvalue, nitritvalue);
 
+                namesss = name + " " + surname;
+                namelist.add(namesss);
+                sendTaskResultAsBroadcast(namelist);
+
                 Nitritvalue = Double.valueOf(nitritvalue);
-                if(Nitritvalue >= 15){
+                if(Nitritvalue >= 20){
                     Name = name;
                     Surname = surname;
                     Date = date;
@@ -183,53 +187,6 @@ public class MyBoundService extends Service {
         mbroadcastintent.putExtra(EKSTRA_KEY_BROADCAST_MESSAGE, message);
         LocalBroadcastManager.getInstance(this).sendBroadcast(mbroadcastintent);
     }
-
-    private void getNames() {
-        String url = Config.DATA_URL_NameSurname;
-
-        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                showJSONNames(response);
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
-                });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(MyBoundService.this);
-        requestQueue.add(stringRequest);
-
-    }
-
-    private void showJSONNames(String response) {
-        namelist  =  new ArrayList<String>();
-        namelist.add(0,"Select a Name");
-
-        try {
-            JSONObject jsonObject = new JSONObject(response);
-            JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
-
-            for (int i = 0; i < result.length(); i++) {
-                JSONObject jo = result.getJSONObject(i);
-                String name = jo.getString(Config. KEY_Name_n);
-                String surname = jo.getString(Config. KEY_Surname_n);
-
-                final HashMap<String, String> names = new HashMap<>();
-                names.put(Config.KEY_Name_n,  name);
-                names.put(Config.KEY_Surname_n, surname);
-
-                namesss = name + " " + surname;
-                namelist.add(namesss);
-                sendTaskResultAsBroadcast(namelist);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void sendTaskResultAsBroadcast(ArrayList nameresult){
         Intent broadcastintent = new Intent();
         broadcastintent.setAction(SERVICE_TASK_RESULT_COMPLETE);

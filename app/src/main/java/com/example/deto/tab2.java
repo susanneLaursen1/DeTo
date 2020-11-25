@@ -32,15 +32,23 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import static com.example.deto.MyBoundService.SERVICE_TASK_RESULT_COMPLETE;
 import static com.example.deto.MyBoundService.EKSTRA_KEY_BROADCAST_NAME_RESULT;
@@ -50,8 +58,8 @@ public class tab2 extends Fragment {
     public static final String EXTRA_NAME_SURNAME = "EXTRA_Name_Surname";
     private Spinner spinner;
     private  String SelectedName;
-    ListView listViewPatientData;
     TextView textViewPatientName;
+    GraphView graph;
 
     // TODO: Rename and change types and number of parameters
     public static tab2 newInstance(String param1, String param2) {
@@ -71,8 +79,8 @@ public class tab2 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab2, container, false);
         spinner = (Spinner) view.findViewById(R.id.spinner);
-        listViewPatientData = view.findViewById(R.id.listViewPatientData);
         textViewPatientName = view.findViewById(R.id.textviewPatientName);
+        graph = view.findViewById(R.id.graph);
         return view;
 
     }
@@ -96,7 +104,14 @@ public class tab2 extends Fragment {
             if(broadcatedResult!=null){
                 ArrayList nameresult = broadcatedResult.getStringArrayListExtra(EKSTRA_KEY_BROADCAST_NAME_RESULT);
                 if(nameresult!=null){
-                    SelectName(nameresult);
+                    ArrayList result = new ArrayList();
+                    // Loop over argument list.
+                    for (Object item : nameresult) {
+                        if (!result.contains(item)) {
+                            result.add(item);
+                        }
+                        SelectName(result);
+                    }
                 }
 
             }
@@ -154,6 +169,7 @@ public class tab2 extends Fragment {
     }
     private void showPatientData(String response) {
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
@@ -163,19 +179,9 @@ public class tab2 extends Fragment {
                 String date = jo.getString(Config.KEY_Date_p);
                 String nitritvalue = jo.getString(Config.KEY_Nitritvalue_p);
 
-                final HashMap<String, String> patientData = new HashMap<>();
-                patientData.put(Config.KEY_Date_p, date);
-                patientData.put(Config.KEY_Nitritvalue_p, nitritvalue);
-                list.add(patientData);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        ArrayAdapter<HashMap<String, String>>  itemsAdapter =
-                new ArrayAdapter<HashMap<String, String>> (getContext(), android.R.layout.simple_list_item_1, (list));
-        listViewPatientData.setAdapter(itemsAdapter);
-
     }
-
 }
