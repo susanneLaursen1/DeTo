@@ -35,7 +35,7 @@ public class tab3 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab3, container, false);
-       /* myVideo1  = view.findViewById(R.id.video_view);
+        myVideo1  = view.findViewById(R.id.video_view);
         myVideo1.requestFocus();
         myVideo1.setVideoURI(getPath(index));
         index++;
@@ -62,8 +62,6 @@ public class tab3 extends Fragment {
         }else{
             //Should do nothing
         }
-         */
-
         return view;
     }
 

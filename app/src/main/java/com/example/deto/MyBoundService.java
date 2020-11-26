@@ -57,6 +57,7 @@ public class MyBoundService extends Service {
     ArrayList<String> namelist;
 
     ArrayList<String> contextList;
+    int antalLinerIDatabasen = 0;
 
     public class BoundServiceBinder extends Binder{
         MyBoundService getService(){
@@ -84,7 +85,7 @@ public class MyBoundService extends Service {
                 while(running){
                     getData();
                     try {
-                        Thread.sleep(50000);
+                        Thread.sleep(10000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -101,7 +102,6 @@ public class MyBoundService extends Service {
             NotificationManager manger = MyBoundService.this.getSystemService(NotificationManager.class);
             manger.createNotificationChannel(channel);
         }
-
     }
     private void getData() {
         String url = Config.DATA_URL;
@@ -120,7 +120,6 @@ public class MyBoundService extends Service {
 
         RequestQueue requestQueue = Volley.newRequestQueue(MyBoundService.this);
         requestQueue.add(stringRequest);
-
     }
 
     private void showJSON(String response) {
@@ -130,39 +129,44 @@ public class MyBoundService extends Service {
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
+            if(antalLinerIDatabasen < result.length()){
+                for (int i = 0; i < result.length(); i++) {
+                    JSONObject jo = result.getJSONObject(i);
+                    String name = jo.getString(Config. KEY_Name);
+                    String surname = jo.getString(Config. KEY_Surname);
+                    String date = jo.getString(Config.KEY_Date);
+                    String nitritvalue = jo.getString(Config.KEY_Nitritvalue);
 
-            for (int i = 0; i < result.length(); i++) {
-                JSONObject jo = result.getJSONObject(i);
-                String name = jo.getString(Config. KEY_Name);
-                String surname = jo.getString(Config. KEY_Surname);
-                String date = jo.getString(Config.KEY_Date);
-                String nitritvalue = jo.getString(Config.KEY_Nitritvalue);
+                    final HashMap<String, String> employees = new HashMap<>();
+                    employees.put(Config.KEY_Name,  name);
+                    employees.put(Config.KEY_Surname, surname);
+                    employees.put(Config.KEY_Date, date);
+                    employees.put(Config.KEY_Nitritvalue, nitritvalue);
 
-                final HashMap<String, String> employees = new HashMap<>();
-                employees.put(Config.KEY_Name,  name);
-                employees.put(Config.KEY_Surname, surname);
-                employees.put(Config.KEY_Date, date);
-                employees.put(Config.KEY_Nitritvalue, nitritvalue);
+                    namesss = name + " " + surname;
+                    namelist.add(namesss);
+                    sendTaskResultAsBroadcast(namelist);
 
-                namesss = name + " " + surname;
-                namelist.add(namesss);
-                sendTaskResultAsBroadcast(namelist);
-
-                Nitritvalue = Double.valueOf(nitritvalue);
-                if(Nitritvalue >= 20){
-                    Name = name;
-                    Surname = surname;
-                    Date = date;
-                    Title = "Borger " + Name + " " +Surname + " har tegn på urinvejsinfektion";
-                    Context = "Det blev d." + Date + " detekteret at " + Name + " " +Surname + " har en nitritværdi på "+ Nitritvalue;
-                    contextList.add(Context);
-                    sendMessageAsBroadcast(contextList);
-                    displayNotification();
+                    Nitritvalue = Double.valueOf(nitritvalue);
+                    if(Nitritvalue >= 5){
+                        Name = name;
+                        Surname = surname;
+                        Date = date;
+                        Title = "Borger " + Name + " " +Surname + " har tegn på urinvejsinfektion";
+                        Context = "Det blev d." + Date + " detekteret at " + Name + " " +Surname + " har en nitritværdi på "+ Nitritvalue;
+                        contextList.add(Context);
+                        sendMessageAsBroadcast(contextList);
+                        displayNotification();
+                    }
                 }
             }
+
+            antalLinerIDatabasen = result.length();
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
     }
 
     private void displayNotification(){
@@ -173,7 +177,8 @@ public class MyBoundService extends Service {
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setOngoing(true);
+                //.setOngoing(true)
+                ;
 
         NotificationManagerCompat mNotificationMrg = NotificationManagerCompat.from(MyBoundService.this);
         mNotificationMrg.notify(1,mBuilder.build());
