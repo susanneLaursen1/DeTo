@@ -17,11 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,32 +28,35 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 
 import static com.example.deto.MyBoundService.SERVICE_TASK_RESULT_COMPLETE;
 import static com.example.deto.MyBoundService.EKSTRA_KEY_BROADCAST_NAME_RESULT;
 
 public class tab2 extends Fragment {
+    SimpleDateFormat sdfToDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    SimpleDateFormat sdfToString = new SimpleDateFormat("HH:mm");
+
     private static final String TAG = "Tab2";
     public static final String EXTRA_NAME_SURNAME = "EXTRA_Name_Surname";
     private Spinner spinner;
     private  String SelectedName;
     TextView textViewPatientName;
+
+    PointsGraphSeries<DataPoint> series;
     GraphView graph;
 
     // TODO: Rename and change types and number of parameters
@@ -131,7 +129,6 @@ public class tab2 extends Fragment {
              }
              else{
                  String str = parent.getItemAtPosition(position).toString();
-                 Toast.makeText(getActivity(), "Selected " + str, Toast.LENGTH_LONG).show();
                  SelectedName = str.split(" ")[0];
                  textViewPatientName.setText(str);
                  getPatientData();
@@ -167,9 +164,10 @@ public class tab2 extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
-    private void showPatientData(String response) {
-        ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 
+    private void showPatientData(String response) {
+        ArrayList<Date> x_axis=new ArrayList<Date>();
+        ArrayList<Double> y_axis=new ArrayList<Double>();
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
@@ -177,8 +175,28 @@ public class tab2 extends Fragment {
             for (int i = 0; i < result.length(); i++) {
                 JSONObject jo = result.getJSONObject(i);
                 String date = jo.getString(Config.KEY_Date_p);
-                String nitritvalue = jo.getString(Config.KEY_Nitritvalue_p);
 
+                Date x_date_D = null;
+                try {
+                    x_date_D = sdfToDate.parse(date);
+                    x_axis.add(x_date_D);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+                String nitritvalue = jo.getString(Config.KEY_Nitritvalue_p);
+                Double y_nitritValueD = Double.valueOf(nitritvalue);
+                y_axis.add(y_nitritValueD);
+
+                for(int k=0; k <x_axis.size();k++)
+                {
+                    series= new PointsGraphSeries<>(new DataPoint[]{
+                            new DataPoint(x_axis.get(k), y_axis.get(k))
+                    });
+                    graph.addSeries(series);
+                    graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
