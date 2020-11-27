@@ -24,7 +24,8 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".SecondActivity" />
+        <activity android:name=".SecondActivity"
+            android:launchMode="singleTop"/>
         <activity android:name=".mylist" />
         <activity android:name=".MainActivity">
             <intent-filter>

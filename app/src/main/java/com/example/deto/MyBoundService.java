@@ -152,8 +152,8 @@ public class MyBoundService extends Service {
                         Name = name;
                         Surname = surname;
                         Date = date;
-                        Title = "Borger " + Name + " " +Surname + " har tegn på urinvejsinfektion";
-                        Context = "Det blev d." + Date + " detekteret at " + Name + " " +Surname + " har en nitritværdi på "+ Nitritvalue;
+                        Title = Name + " " +Surname + " har tegn på urinvejsinfektion";
+                        Context = "Den " + Date + " havde " + Name + " " +Surname + " en nitritværdi på "+ Nitritvalue;
                         contextList.add(Context);
                         sendMessageAsBroadcast(contextList);
                         displayNotification();
@@ -170,15 +170,19 @@ public class MyBoundService extends Service {
     }
 
     private void displayNotification(){
+        Intent resultIntent = new Intent(this, SecondActivity.class);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(this,1,resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MyBoundService.this,Channel_Id)
                 .setSmallIcon(R.drawable.ic_baseline_add_alert_24)
                 .setContentTitle(Title)
                 .setContentText(Context)
+                .setAutoCancel(true)
+                .setContentIntent(resultPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                //.setOngoing(true)
-                ;
+                .setOngoing(true);
+
 
         NotificationManagerCompat mNotificationMrg = NotificationManagerCompat.from(MyBoundService.this);
         mNotificationMrg.notify(1,mBuilder.build());

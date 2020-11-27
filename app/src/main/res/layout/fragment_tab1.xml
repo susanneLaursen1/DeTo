@@ -7,10 +7,21 @@
     android:orientation="vertical"
     tools:context=".tab1">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="131dp"
+        android:text="Her er oplistet alle nylige notifikationer. Alle de listede borgere har vist tegn på urinvejsinfektion og bør derfor undersøges nærmere."
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="20sp" />
+
     <ListView
         android:id="@+id/listViewNoti"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content">
+
+
+    </ListView>
 
 
 </LinearLayout>
