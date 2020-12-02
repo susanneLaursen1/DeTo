@@ -90,13 +90,16 @@
 
     <Button
         android:id="@+id/btnUnBindService"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="UnBind"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:shadowColor="@color/your_color"
+        android:text=""
+        android:textColor="@color/your_color"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textWarning"
-        tools:layout_editor_absoluteX="172dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="172dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
