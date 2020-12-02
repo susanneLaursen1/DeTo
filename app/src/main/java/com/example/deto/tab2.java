@@ -4,28 +4,20 @@ package com.example.deto;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
 import android.content.IntentFilter;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import android.util.Log;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -33,25 +25,25 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.DataPointInterface;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.PointsGraphSeries;
+import com.jjoe64.graphview.series.Series;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.Date;
 
-import static com.example.deto.MyBoundService.SERVICE_TASK_RESULT_COMPLETE;
 import static com.example.deto.MyBoundService.EKSTRA_KEY_BROADCAST_NAME_RESULT;
+import static com.example.deto.MyBoundService.SERVICE_TASK_RESULT_COMPLETE;
 
 public class tab2 extends Fragment {
     private static final String TAG = "Tab2";
@@ -60,6 +52,17 @@ public class tab2 extends Fragment {
     private  String SelectedName;
     TextView textViewPatientName;
     GraphView graph;
+    PointsGraphSeries<DataPoint> series;
+    private JSONArray result;
+
+    //TextViews to display details
+    private TextView textViewCourse;
+    private TextView textViewSession;
+
+
+
+    SimpleDateFormat sdfToDate = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    SimpleDateFormat sdfToString = new SimpleDateFormat("dd-MM HH:mm");
 
     // TODO: Rename and change types and number of parameters
     public static tab2 newInstance(String param1, String param2) {
@@ -81,6 +84,14 @@ public class tab2 extends Fragment {
         spinner = (Spinner) view.findViewById(R.id.spinner);
         textViewPatientName = view.findViewById(R.id.textviewPatientName);
         graph = view.findViewById(R.id.graph);
+        // first series is a line
+
+
+
+        //Initializing TextViews
+
+        textViewCourse =view.findViewById(R.id.textViewCourse);
+        textViewSession = view.findViewById(R.id.textViewSession);
         return view;
 
     }
@@ -127,6 +138,7 @@ public class tab2 extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
              if(parent.getItemAtPosition(position).equals("Select a Name")) { //Do nothing
              }
              else{
@@ -134,13 +146,23 @@ public class tab2 extends Fragment {
                  Toast.makeText(getActivity(), "Selected " + str, Toast.LENGTH_LONG).show();
                  SelectedName = str.split(" ")[0];
                  textViewPatientName.setText(str);
+                 //textViewCourse.setText(getNitrit(position));
+                // textViewSession.setText(getDate(position));
+                // getDate(position);
+                // getNitrit(position);
+
+
                  getPatientData();
+
              }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Toast.makeText(getActivity(), "Please Enter Data Value", Toast.LENGTH_LONG).show();
+                textViewCourse.setText("");
+                textViewSession.setText("");
+
 
             }
         });
@@ -154,6 +176,7 @@ public class tab2 extends Fragment {
             public void onResponse(String response) {
 
                 showPatientData(response);
+
             }
 
         },
@@ -168,7 +191,9 @@ public class tab2 extends Fragment {
         requestQueue.add(stringRequest);
     }
     private void showPatientData(String response) {
-        ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+        ArrayList<Date> x_axis=new ArrayList<Date>();
+        ArrayList<Double> y_axis=new ArrayList<Double>();
+        ArrayList<String> datelist=new ArrayList<String>();
 
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -177,11 +202,79 @@ public class tab2 extends Fragment {
             for (int i = 0; i < result.length(); i++) {
                 JSONObject jo = result.getJSONObject(i);
                 String date = jo.getString(Config.KEY_Date_p);
+                datelist.add(date);
+                StringBuilder builders = new StringBuilder();
+                for (String datee : datelist) {
+                    builders.append(datee + "\n");
+                }
+                textViewCourse.setLines(10);
+                textViewCourse.setText(builders.toString());
+                textViewCourse.setMovementMethod(new ScrollingMovementMethod());
+
+                Date x_date_D = null;
+                try {
+                    x_date_D = sdfToDate.parse(date);
+                    x_axis.add(x_date_D);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
                 String nitritvalue = jo.getString(Config.KEY_Nitritvalue_p);
+                Double y_nitritValueD = Double.valueOf(nitritvalue);
+                y_axis.add(y_nitritValueD);
+
+                StringBuilder builder = new StringBuilder();
+                for (Double details : y_axis) {
+                    builder.append(details + "\n");
+                }
+                textViewSession.setLines(10);
+                textViewSession.setText(builder.toString());
+                textViewSession.setMovementMethod(new ScrollingMovementMethod());
+
+
+                for(int k=0; k <x_axis.size();k++)
+                {
+                    series= new PointsGraphSeries<>(new DataPoint[]{
+                            new DataPoint(x_axis.get(k), y_axis.get(k))
+                    });
+
+
+
+                    graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+
+                    GridLabelRenderer gridLabel = graph.getGridLabelRenderer();
+                    // set manual X bounds
+
+                    graph.addSeries(series);
+
+                  //  gridLabel.setHorizontalLabelsAngle(90);
+                    gridLabel.setHorizontalAxisTitle("Dato");
+                    gridLabel.setVerticalAxisTitle("Nitritværdi (ppm)");
+
+
+
+                    series.setOnDataPointTapListener(new OnDataPointTapListener()
+                    {
+                        @Override
+                        public void onTap(Series series, DataPointInterface dataPoint) {
+                            Date d = new java.sql.Date((long) dataPoint.getX());
+                            SimpleDateFormat format1 = new SimpleDateFormat("dd-MM HH:mm");
+                            String formatted = format1.format(d.getTime());
+                            Toast.makeText(getContext(), "X:" + formatted +"\nY:"+ dataPoint.getY()+ "ppm", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+                  //    textViewCourse.setText(x_axis);
+
+                  //  textViewSession.setText((CharSequence) y_axis);
+                }
 
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
     }
 }

@@ -3,16 +3,12 @@ package com.example.deto;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.net.IpSecManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -23,14 +19,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.jar.Attributes;
 
 public class MyBoundService extends Service {
     private static final String TAG = "MyBoundService";
@@ -149,7 +144,7 @@ public class MyBoundService extends Service {
                 sendTaskResultAsBroadcast(namelist);
 
                 Nitritvalue = Double.valueOf(nitritvalue);
-                if(Nitritvalue >= 20){
+                if(Nitritvalue >= 5){
                     Name = name;
                     Surname = surname;
                     Date = date;
