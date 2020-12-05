@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:scrollbars="horizontal" android:id="@+id/ScrollView">
+<RelativeLayout
+    android:layout_width="wrap_content"
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -10,6 +16,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".tab2">
+
 
     <Spinner
         android:id="@+id/spinner"
@@ -20,14 +27,63 @@
         android:id="@+id/textviewPatientName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:autoSizeMinTextSize="@dimen/activity_horizontal_margin"
+        android:layout_above="@+id/graph"
+        android:layout_marginBottom="58dp"
         android:gravity="center_horizontal"
+        app:autoSizeMinTextSize="@dimen/activity_horizontal_margin"
         app:autoSizeTextType="uniform"
-        app:textAllCaps="true"          />
+        app:textAllCaps="true" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textviewPatientName"
+        android:layout_marginTop="-175dp">
+
+        <TableRow>
+
+            /><TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="Dato"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="Nitritværdi (ppm)"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow>
+
+            />
+
+            <TextView
+                android:id="@+id/textViewCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+                android:id="@+id/textViewSession"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp" />
+        </TableRow>
+    </TableLayout>
+
 
     <com.jjoe64.graphview.GraphView
         android:id="@+id/graph"
         android:layout_width="match_parent"
-        android:layout_height="200dip" />
+        android:layout_height="200dip"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="71dp" />
 
-</LinearLayout>
+
+</RelativeLayout>
+
+</ScrollView>
