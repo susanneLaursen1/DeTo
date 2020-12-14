@@ -1,7 +1,6 @@
 package com.example.deto;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -20,10 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private int counter = 5;
     private ServiceConnection serviceConnection;
     private MyBoundService boundService;
-
-    public MainActivity(Object mMockContext) {
-
-    }
 
 
     @Override
@@ -58,16 +53,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public String validate(String UserName, String UserPassword){
+    public void validate(String UserName, String UserPassword){
         if((UserName.equals("Deto")) && (UserPassword.equals("2020"))){
-            //return "Login was successful";
             bindService();
 
             Intent i = new Intent(MainActivity.this,SecondActivity.class);
             startActivity(i);
-
         } else{
-           counter--;
+            counter--;
             Info.setText("Number of attemts remaning:" + counter);
 
             if(counter == 0){
@@ -75,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 Warning.setText("You have no more attempts left. \n Please try to log in from a computer");
             }
         }
-        return UserName;
     }
     //BoundService
     private void creatServiceConnection(){

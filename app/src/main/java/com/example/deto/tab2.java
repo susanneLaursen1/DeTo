@@ -139,7 +139,7 @@ public class tab2 extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-             if(parent.getItemAtPosition(position).equals("Select a Name")) { //Do nothing
+             if(parent.getItemAtPosition(position).equals("Vælg en borger")) { //Do nothing
              }
              else{
                  String str = parent.getItemAtPosition(position).toString();
